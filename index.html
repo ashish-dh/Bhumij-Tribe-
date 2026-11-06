@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bhumij Cultural Heritage Digital Archive</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            earth: {
+              50: '#fdf8f6',
+              100: '#f2e8e5',
+              600: '#994d33',
+              700: '#7d3822',
+              800: '#5c2918',
+              900: '#3d1a0e',
+            }
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-amber-50/30 text-stone-800 min-h-screen flex flex-col font-sans">
+
+  <!-- Header -->
+  <header class="bg-earth-800 text-amber-50 shadow-lg border-b-4 border-amber-600 sticky top-0 z-40">
+    <div class="max-w-7xl mx-auto px-4 py-5 flex flex-col md:flex-row justify-between items-center gap-4">
+      <div class="flex items-center space-x-3">
+        <i class="fa-solid me-2 fa-monument text-3xl text-amber-400"></i>
+        <div>
+          <h1 class="text-2xl font-bold tracking-wide">Bhumij Cultural Archive</h1>
+          <p class="text-xs text-amber-200">Preserving Sacred Cosmology, Heritage & History</p>
+        </div>
+      </div>
+      <div class="flex items-center gap-3">
+        <span id="record-count" class="bg-earth-900/60 text-amber-300 text-xs px-3 py-1.5 rounded-full border border-amber-500/30">
+          Showing 10 Records
+        </span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="max-w-7xl mx-auto px-4 py-8 flex-1 w-full">
+
+    <!-- Search & Filter Controls -->
+    <div class="bg-white p-4 md:p-6 rounded-xl shadow-sm border border-stone-200 mb-8 space-y-4">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <!-- Search Input -->
+        <div class="relative md:col-span-1">
+          <i class="fa-solid fa-magnifying-glass absolute left-3 top-3.5 text-stone-400"></i>
+          <input type="text" id="search-input" placeholder="Search titles, descriptions, subjects..."
+            class="w-full pl-10 pr-4 py-2.5 bg-stone-50 border border-stone-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-earth-600" />
+        </div>
+
+        <!-- Filter by Type -->
+        <div>
+          <select id="type-filter" class="w-full py-2.5 px-3 bg-stone-50 border border-stone-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-earth-600">
+            <option value="">All Categories / Types</option>
+          </select>
+        </div>
+
+        <!-- Filter by Rights -->
+        <div>
+          <select id="rights-filter" class="w-full py-2.5 px-3 bg-stone-50 border border-stone-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-earth-600">
+            <option value="">All Access Rights</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <!-- Grid Container -->
+    <div id="cards-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <!-- Cards rendered via JS -->
+    </div>
+
+    <!-- Empty State -->
+    <div id="no-results" class="hidden text-center py-16 bg-white rounded-xl border border-stone-200">
+      <i class="fa-solid fa-folder-open text-4xl text-stone-300 mb-3"></i>
+      <h3 class="text-lg font-semibold text-stone-700">No records found</h3>
+      <p class="text-stone-500 text-sm mt-1">Try adjusting your search query or clear your active filters.</p>
+    </div>
+  </main>
+
+  <!-- Modal Details Drawer -->
+  <div id="detail-modal" class="fixed inset-0 bg-stone-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-white w-full max-w-2xl max-h-[90vh] overflow-y-auto rounded-2xl shadow-2xl border border-stone-200 relative flex flex-col">
+      <button id="close-modal" class="absolute top-4 right-4 bg-stone-100 hover:bg-stone-200 w-8 h-8 rounded-full flex items-center justify-center text-stone-600">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+      <div id="modal-content" class="p-6 md:p-8 space-y-4">
+        <!-- JS filled -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="bg-earth-900 text-stone-400 py-6 border-t border-earth-800 text-center text-xs mt-12">
+    <p>Bhumij Cultural Heritage Repository &copy; 2026. Data curated under Open Research & Public Domain initiatives.</p>
+  </footer>
+
+  <!-- Script with embedded CSV data -->
+  <script>
+    const dataset = [
+      {
+        "title": "Goram-Gohram/ Singbonga Deity",
+        "subject": "Religion, Cosmology, Sun Deity, Nature Worship",
+        "description": "Supreme creator deity in Bhumij spiritual cosmology, representing the Sun, purity, and life-giving energy. Sacred offerings are made to seek village protection and rain.",
+        "source": "Tribal Life in India, Ministry of infrmation and Broadcsting",
+        "language": "unr/ English",
+        "relation": "Relates to Jaher Than and Laya System",
+        "coverage": "Chota Nagpur Plateau, Jharkhand, India",
+        "creator": "Bhumij Tribal Community",
+        "contributor": "Hribhendu Ranjan Keshri, Ashish Kumar, Natansh Parth",
+        "publisher": "Anthropoligical Survey of India",
+        "rights": "Open Access / Public Domain",
+        "type": "Sacred Cosmology",
+        "identifier": "Singbonga (सिङ्गबोंगा) · Tribal Deity · LagnaGuru Library of Gods",
+        "image": "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "title": "Kili / Gotra System",
+        "subject": "Social Structure, Exogamous, Clans, Totemism, Kinship",
+        "description": "The totemic social organization of the Bhumij tribe divided into exogamous clans (Kili/Gotras) named after flora and fauna like Sal tree (Tula), Turtle (Kachhap), and Serpent (Nag).",
+        "source": "Castes and tribes of Southern India / Bengal , Risley H.H.",
+        "language": "UNR/ English",
+        "relation": "Related to Bhumij Ancestral Lineage",
+        "coverage": "East Singhbhum , Jharkhand, India",
+        "creator": "Ancestral Lineage Elders",
+        "contributor": "Hribhendu Ranjan Keshri, Ashish Kumar, Natansh Parth",
+        "publisher": "Tribal Research Institute Jharkhand",
+        "rights": "Creative Commons Attribution-ShareAlike",
+        "type": "Social Structure",
+        "identifier": "Bhumij people explained",
+        "image": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "title": "Bhumij Language (Latar/Tar Munda)",
+        "subject": "Linguistics, Austroasiatic, Munda, Languages, Oral Tradition",
+        "description": "An Austroasiatic language belonging to the Munda sub-family spoken by the Bhumij people in Jharkhand, West Bengal, and Odisha. Primarily preserved through oral folktales.",
+        "source": "Linguistics Survey of India , Vol IV (Munda and Dravidian Languages)",
+        "language": "UNR/ English",
+        "relation": "Relates to Ol Onol Script",
+        "coverage": "Jharkhand, West Bengal, Odisha, India",
+        "creator": "Bhumij Speakers",
+        "contributor": "Hribhendu Ranjan Keshri, Ashish Kumar, Natansh Parth",
+        "publisher": "Linguistic Survey of India",
+        "rights": "Open Access / Public Domain",
+        "type": "Sound / Text",
+        "identifier": "Bhumij language — Grokipedia",
+        "image": "https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "title": "Ol Onol Script",
+        "subject": "Writing System, Script Revival, Indigenous Literacy",
+        "description": "The writing script created specifically for writing the Bhumij language to preserve oral literature, folklore, and educational materials from extinction.",
+        "source": "Indigenous Literacy and Script Movements in Eastern India",
+        "language": "UNR/ English",
+        "relation": "Relates to Bhumij Language",
+        "coverage": "Seraikela Kharsawan, Jharkhand",
+        "creator": "Mahendra Nath Sardar",
+        "contributor": "Hribhendu Ranjan Keshri, Ashish Kumar, Natansh Parth",
+        "publisher": "Bhumij Bhasha Sahitya Parishad",
+        "rights": "Open Access / Educational",
+        "type": "Interactive Resource",
+        "identifier": "Ol Onal - Wikiwand",
+        "image": "https://images.unsplash.com/photo-1455390582262-044cdead277a?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "title": "Jaher Than",
+        "subject": "Sacred Grove, Forest Ecology, Biodiversity, Nature Temple",
+        "description": "Sacred virgin forest groves maintained at the border of Bhumij villages. Cutting trees or harming animals in Jaher Than is strictly prohibited, preserving indigenous biodiversity.",
+        "source": "Sacred Groves and Ethno-Forestry practices among Munda and Bhumij Tribes",
+        "language": "UNR/ English",
+        "relation": "Relates to Singbonga Deity and Laya Priest System",
+        "coverage": "Mayurbhanj & Singhbhum Forest Belt, India",
+        "creator": "Village Elders & Layas",
+        "contributor": "Hribhendu Ranjan Keshri, Ashish Kumar, Natansh Parth",
+        "publisher": "Environmental & Cultural Heritage Society",
+        "rights": "Public Domain / Open research",
+        "type": "Physical Object / Ecosystem",
+        "identifier": "Jaherthan - Wikipedia",
+        "image": "https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "title": "Youth & Village Elders (Laya Priest System)",
+        "subject": "Traditional Governance, Sacred Rituals, Spiritual Priest",
+        "description": "The traditional village priest responsible for conducting sacred rituals at Jaher Than, leading seasonal festivals, and maintaining harmony between villagers and nature spirits.",
+        "source": "Customary Laws and Governance of Chota Nagpur Tribes",
+        "language": "UNR/ English",
+        "relation": "Relates to Jaher Than and Sarhul Festival",
+        "coverage": "Purulia & Singhbhum Region, India",
+        "creator": "Hereditary Village Priests",
+        "contributor": "Hribhendu Ranjan Keshri, Ashish Kumar, Natansh Parth",
+        "publisher": "Council Of Tribal Culture",
+        "rights": "Open Access",
+        "type": "Oral tradition",
+        "identifier": "Bhumij people - Wikiwand",
+        "image": "https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "title": "Sarhul Festival",
+        "subject": "Spring Blossom, Flower Festival, Agriculture Cycle",
+        "description": "Major spring festival celebrating the flowering of Sal trees. Villagers offer Sal blossoms to deities and ancestors at Jaher Than before starting agricultural activity.",
+        "source": "Festival Traditions of Tribal Jharkhand",
+        "language": "UNR/ English",
+        "relation": "Relates to Karam Festival and Jaher Than",
+        "coverage": "Chota Nagpur Region, Jharkhand",
+        "creator": "Community Folk Groups",
+        "contributor": "Hribhendu Ranjan Keshri, Ashish Kumar, Natansh Parth",
+        "publisher": "Department of Culture, Govt. of Jharkhand",
+        "rights": "Public Domain",
+        "type": "Event / Festival",
+        "identifier": "Bhumij people — Grokipedia",
+        "image": "https://images.unsplash.com/photo-1533105079780-92b9be482077?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "title": "Karam Festival",
+        "subject": "Autumn Harvest, Karam Tree, Worship, Fertility Ritual",
+        "description": "Autumn harvest festival centered on worshipping the branch of the Karam tree (Nauclea parvifolia). Youth dance overnight to celebrate agricultural growth, prosperity, and sisterhood.",
+        "source": "Ethnobotanical Sacred Trees of Eastern India",
+        "language": "UNR/ English",
+        "relation": "Relates to Sarhul Festival",
+        "coverage": "Ranchi, Purulia and Singhbhum Districts",
+        "creator": "Youth & Village Elders",
+        "contributor": "Hribhendu Ranjan Keshri, Ashish Kumar, Natansh Parth",
+        "publisher": "Folk Cultural Academy of India",
+        "rights": "Public Domain",
+        "type": "Event / Festival",
+        "identifier": "Ganga Narayan Singh - Wikiwand",
+        "image": "https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "title": "Bandna / Sohrai Festival",
+        "subject": "Cattle Worship, Wall Art, Post-Harvest Celebration",
+        "description": "Post-harvest winter festival honoring farm animals. Homes are painted with natural mud pigments and cattle are bathed, anointed with oils, and decorated with garlands.",
+        "source": "Indigenous Folk Paintings and Cattle Festivals of Jharkhand",
+        "language": "UNR/ English",
+        "relation": "Relates to Karam Festival",
+        "coverage": "East Singhbhum, Jharkhand & West Bengal",
+        "creator": "Bhumij Farmers",
+        "contributor": "Hribhendu Ranjan Keshri, Ashish Kumar, Natansh Parth",
+        "publisher": "Tribal Art Documentation Centre",
+        "rights": "Open Access",
+        "type": "Event / Art",
+        "identifier": "Sohrai/Bandna in Jharkhand",
+        "image": "https://images.unsplash.com/photo-1579783902614-a3fb3927b675?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "title": "Ganga Narayan Singh & Chuar Rebellion (1832)",
+        "subject": "Freedom Movement, Chuar Rebellion, Tribal Resistance",
+        "description": "Historical 1832 armed uprising led by Bhumij leader Ganga Narayan Singh against oppressive British land revenues and colonial expansion in Dhalbhum and Manbhum.",
+        "source": "The Chuar Rebellion and Bhumij Revolt of 1832-33, J.C. Jha",
+        "language": "UNR/ English",
+        "relation": "Relates to Bhumij Ancestral History",
+        "coverage": "Manbhum, Dhalbhum, Jungle Mahals, India",
+        "creator": "Ganga Narayan Singh",
+        "contributor": "Hribhendu Ranjan Keshri, Ashish Kumar, Natansh Parth",
+        "publisher": "Indian Council of Historical Research",
+        "rights": "Public Domain",
+        "type": "Historical Event",
+        "identifier": "Chuar Rebellion - Wikiwand",
+        "image": "https://images.unsplash.com/photo-1569012871812-a3b64522432c?auto=format&fit=crop&w=600&q=80"
+      }
+    ];
+
+    // Populating DOM elements
+    const gridEl = document.getElementById('cards-grid');
+    const searchInput = document.getElementById('search-input');
+    const typeFilter = document.getElementById('type-filter');
+    const rightsFilter = document.getElementById('rights-filter');
+    const noResults = document.getElementById('no-results');
+    const recordCount = document.getElementById('record-count');
+
+    // Populate dropdown options dynamically
+    function populateDropdowns() {
+      const types = [...new Set(dataset.map(item => item.type).filter(Boolean))];
+      const rights = [...new Set(dataset.map(item => item.rights).filter(Boolean))];
+
+      types.forEach(t => {
+        const opt = document.createElement('option');
+        opt.value = t;
+        opt.textContent = t;
+        typeFilter.appendChild(opt);
+      });
+
+      rights.forEach(r => {
+        const opt = document.createElement('option');
+        opt.value = r;
+        opt.textContent = r;
+        rightsFilter.appendChild(opt);
+      });
+    }
+
+    // Render cards function
+    function renderCards(items) {
+      gridEl.innerHTML = '';
+      recordCount.textContent = `Showing ${items.length} Records`;
+
+      if (items.length === 0) {
+        noResults.classList.remove('hidden');
+        return;
+      }
+      noResults.classList.add('hidden');
+
+      items.forEach((item, idx) => {
+        const card = document.createElement('div');
+        card.className = "bg-white rounded-xl overflow-hidden border border-stone-200 hover:shadow-lg transition-all flex flex-col cursor-pointer";
+        card.onclick = () => openModal(item);
+
+        card.innerHTML = `
+          <div class="h-44 bg-stone-100 overflow-hidden relative">
+            <img src="${item.image}" alt="${item.title}" class="w-full h-full object-cover transition-transform duration-500 hover:scale-105" />
+            <span class="absolute top-3 right-3 bg-earth-800/80 text-amber-100 text-[10px] font-semibold px-2.5 py-1 rounded-md backdrop-blur-sm">
+              ${item.type || 'Archive'}
+            </span>
+          </div>
+          <div class="p-5 flex-1 flex flex-col justify-between space-y-3">
+            <div>
+              <h3 class="font-bold text-stone-900 text-lg leading-tight mb-2">${item.title}</h3>
+              <p class="text-stone-600 text-xs line-clamp-3 leading-relaxed">${item.description}</p>
+            </div>
+            <div>
+              <div class="flex flex-wrap gap-1 mb-3">
+                ${item.subject.split(',').slice(0, 3).map(s => `<span class="bg-amber-100/70 text-earth-800 text-[10px] font-medium px-2 py-0.5 rounded">${s.trim()}</span>`).join('')}
+              </div>
+              <div class="pt-3 border-t border-stone-100 flex items-center justify-between text-[11px] text-stone-500">
+                <span><i class="fa-solid fa-location-dot text-amber-700 mr-1"></i> ${item.coverage.split(',')[0]}</span>
+                <span class="text-earth-600 font-semibold hover:underline">View Details <i class="fa-solid fa-arrow-right text-[10px]"></i></span>
+              </div>
+            </div>
+          </div>
+        `;
+        gridEl.appendChild(card);
+      });
+    }
+
+    // Filter Logic
+    function filterData() {
+      const q = searchInput.value.toLowerCase();
+      const selType = typeFilter.value;
+      const selRights = rightsFilter.value;
+
+      const filtered = dataset.filter(item => {
+        const matchesSearch = 
+          item.title.toLowerCase().includes(q) ||
+          item.description.toLowerCase().includes(q) ||
+          item.subject.toLowerCase().includes(q) ||
+          item.creator.toLowerCase().includes(q);
+        
+        const matchesType = selType === "" || item.type === selType;
+        const matchesRights = selRights === "" || item.rights === selRights;
+
+        return matchesSearch && matchesType && matchesRights;
+      });
+
+      renderCards(filtered);
+    }
+
+    // Modal view handler
+    function openModal(item) {
+      const modal = document.getElementById('detail-modal');
+      const content = document.getElementById('modal-content');
+
+      content.innerHTML = `
+        <div class="border-b border-stone-200 pb-4 pr-6">
+          <span class="bg-earth-100 text-earth-800 text-xs font-semibold px-2.5 py-1 rounded mb-2 inline-block">${item.type}</span>
+          <h2 class="text-2xl font-bold text-stone-900">${item.title}</h2>
+          <p class="text-xs text-stone-500 mt-1"><i class="fa-solid fa-map-pin mr-1 text-amber-700"></i> ${item.coverage}</p>
+        </div>
+        
+        <div class="space-y-4 text-sm text-stone-700 py-2">
+          <div>
+            <h4 class="font-semibold text-stone-900 mb-1">Description</h4>
+            <p class="leading-relaxed bg-stone-50 p-3 rounded-lg border border-stone-100 text-stone-600">${item.description}</p>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
+            <div class="bg-amber-50/50 p-2.5 rounded border border-amber-100">
+              <span class="font-bold text-stone-800 block">Creator / Origin:</span> ${item.creator}
+            </div>
+            <div class="bg-amber-50/50 p-2.5 rounded border border-amber-100">
+              <span class="font-bold text-stone-800 block">Publisher:</span> ${item.publisher}
+            </div>
+            <div class="bg-amber-50/50 p-2.5 rounded border border-amber-100">
+              <span class="font-bold text-stone-800 block">Source:</span> ${item.source}
+            </div>
+            <div class="bg-amber-50/50 p-2.5 rounded border border-amber-100">
+              <span class="font-bold text-stone-800 block">Rights / License:</span> ${item.rights}
+            </div>
+          </div>
+
+          <div>
+            <h4 class="font-semibold text-stone-900 mb-1">Subjects & Keywords</h4>
+            <div class="flex flex-wrap gap-1.5">
+              ${item.subject.split(',').map(s => `<span class="bg-stone-100 text-stone-700 text-xs px-2.5 py-1 rounded-full">${s.trim()}</span>`).join('')}
+            </div>
+          </div>
+
+          <div class="text-xs text-stone-500 pt-2 border-t border-stone-100">
+            <span class="font-medium text-stone-700">Contributors:</span> ${item.contributor}
+          </div>
+        </div>
+      `;
+
+      modal.classList.remove('hidden');
+    }
+
+    document.getElementById('close-modal').onclick = () => {
+      document.getElementById('detail-modal').classList.add('hidden');
+    };
+
+    // Event listeners
+    searchInput.addEventListener('input', filterData);
+    typeFilter.addEventListener('change', filterData);
+    rightsFilter.addEventListener('change', filterData);
+
+    // Initial load
+    populateDropdowns();
+    renderCards(dataset);
+  </script>
+</body>
+</html>
